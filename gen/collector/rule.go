@@ -1,7 +1,6 @@
 package collector
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/antchfx/htmlquery"
@@ -115,7 +114,7 @@ func (s *spiderRepo) torkitty(name string) (*listCollectorResult, error) {
 	return res, nil
 }
 
-func (s *spiderRepo) (name string) (*listCollectorResult, error) {
+func (s *spiderRepo) sukebei(name string) (*listCollectorResult, error) {
 	url := strings.ReplaceAll("http://sukebei.nyaa.si/?f=0&c=0_0&q={query}", "{query}", name)
 	resp, err := s.client.R().Get(url)
 	if err != nil {
@@ -156,12 +155,12 @@ func (s *spiderRepo) (name string) (*listCollectorResult, error) {
 
 func Get(e string, q string) (*listCollectorResult, error) {
 	switch e {
-		case "btsow":
+	case "btsow":
 		return spider.btsow(q)
-		case "torkitty":
+	case "torkitty":
 		return spider.torkitty(q)
-		case "":
-		return spider.(q)
+	case "sukebei":
+		return spider.sukebei(q)
 	}
 	return nil, nil
 }

@@ -12,3 +12,5 @@
   size: ""
 - name: sukebei
   source: http://sukebei.nyaa.si/?f=0&c=0_0&q={query}
+- name: btsao
+  source: https://cl.btsearch.xyz/zh-cn/search/{query}
