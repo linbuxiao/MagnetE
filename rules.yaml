@@ -1,0 +1,14 @@
+- name: btsow
+  source: http://btsow.bar/search/{query}
+  item: //div[@class='data-list']/div[@class='row']
+  title: //a/@title
+  magnet: //a/@href
+  size: //div/div[1]
+- name: torkitty
+  source: http://www.torkitty.com/search/{query}
+  item: //table[@id='archiveResult']//tr/td[@class='action']/a[2]
+  title: //@title
+  magnet: //@href
+  size: ""
+- name: sukebei
+  source: http://sukebei.nyaa.si/?f=0&c=0_0&q={query}
