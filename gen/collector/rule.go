@@ -53,18 +53,12 @@ func (s *spiderRepo) btsow(name string) (*listCollectorResult, error) {
 	}
 	for _, v := range list {
 		var title, magnet, size string
-		if len("//a/@title") != 0 {
-			titleNode := htmlquery.FindOne(v, "//a/@title")
-			title = htmlquery.InnerText(titleNode)
-		}
-		if len("//a/@href") != 0 {
-			magnetNode := htmlquery.FindOne(v, "//a/@href")
-			magnet = htmlquery.InnerText(magnetNode)
-		}
-		if len("//div/div[1]") != 0 {
-			sizeNode := htmlquery.FindOne(v, "//div/div[1]")
-			size = htmlquery.InnerText(sizeNode)
-		}
+		titleNode := htmlquery.FindOne(v, "//a/@title")
+		title = htmlquery.InnerText(titleNode)
+		magnetNode := htmlquery.FindOne(v, "//a/@href")
+		magnet = htmlquery.InnerText(magnetNode)
+		sizeNode := htmlquery.FindOne(v, "//div/div[1]")
+		size = htmlquery.InnerText(sizeNode)
 		item := &itemCollectorResult{
 			Title:  title,
 			Magnet: magnet,
@@ -92,57 +86,10 @@ func (s *spiderRepo) torkitty(name string) (*listCollectorResult, error) {
 	}
 	for _, v := range list {
 		var title, magnet, size string
-		if len("//@title") != 0 {
-			titleNode := htmlquery.FindOne(v, "//@title")
-			title = htmlquery.InnerText(titleNode)
-		}
-		if len("//@href") != 0 {
-			magnetNode := htmlquery.FindOne(v, "//@href")
-			magnet = htmlquery.InnerText(magnetNode)
-		}
-		if len("") != 0 {
-			sizeNode := htmlquery.FindOne(v, "")
-			size = htmlquery.InnerText(sizeNode)
-		}
-		item := &itemCollectorResult{
-			Title:  title,
-			Magnet: magnet,
-			Size:   size,
-		}
-		res.Data = append(res.Data, item)
-	}
-	return res, nil
-}
-
-func (s *spiderRepo) sukebei(name string) (*listCollectorResult, error) {
-	url := strings.ReplaceAll("http://sukebei.nyaa.si/?f=0&c=0_0&q={query}", "{query}", name)
-	resp, err := s.client.R().Get(url)
-	if err != nil {
-		return nil, err
-	}
-	b := resp.Body()
-	doc, err := htmlquery.Parse(strings.NewReader(string(b)))
-	if err != nil {
-		return nil, err
-	}
-	list := htmlquery.Find(doc, "")
-	res := &listCollectorResult{
-		Title: name,
-	}
-	for _, v := range list {
-		var title, magnet, size string
-		if len("") != 0 {
-			titleNode := htmlquery.FindOne(v, "")
-			title = htmlquery.InnerText(titleNode)
-		}
-		if len("") != 0 {
-			magnetNode := htmlquery.FindOne(v, "")
-			magnet = htmlquery.InnerText(magnetNode)
-		}
-		if len("") != 0 {
-			sizeNode := htmlquery.FindOne(v, "")
-			size = htmlquery.InnerText(sizeNode)
-		}
+		titleNode := htmlquery.FindOne(v, "//@title")
+		title = htmlquery.InnerText(titleNode)
+		magnetNode := htmlquery.FindOne(v, "//@href")
+		magnet = htmlquery.InnerText(magnetNode)
 		item := &itemCollectorResult{
 			Title:  title,
 			Magnet: magnet,
@@ -159,8 +106,6 @@ func Get(e string, q string) (*listCollectorResult, error) {
 		return spider.btsow(q)
 	case "torkitty":
 		return spider.torkitty(q)
-	case "sukebei":
-		return spider.sukebei(q)
 	}
 	return nil, nil
 }

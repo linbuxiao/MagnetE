@@ -56,18 +56,18 @@ func (s *spiderRepo) {{.Name}}(name string) (*listCollectorResult, error) {
 	}
 	for _, v := range list {
 		var title, magnet, size string
-		if len("{{.Title}}") != 0 {
-			titleNode := htmlquery.FindOne(v, "{{.Title}}")
-			title = htmlquery.InnerText(titleNode)
-		}
-		if len("{{.Magnet}}") != 0 {
-			magnetNode := htmlquery.FindOne(v, "{{.Magnet}}")
-			magnet = htmlquery.InnerText(magnetNode)
-		}
-		if len("{{.Size}}") != 0 {
-			sizeNode := htmlquery.FindOne(v, "{{.Size}}")
-			size = htmlquery.InnerText(sizeNode)
-		}
+		{{- if .Title}}
+        titleNode := htmlquery.FindOne(v, "{{.Title}}")
+        title = htmlquery.InnerText(titleNode)
+		{{- end}}
+		{{- if .Magnet}}
+        magnetNode := htmlquery.FindOne(v, "{{.Magnet}}")
+        magnet = htmlquery.InnerText(magnetNode)
+		{{- end}}
+		{{- if .Size}}
+        sizeNode := htmlquery.FindOne(v, "{{.Size}}")
+        size = htmlquery.InnerText(sizeNode)
+		{{- end}}
 		item := &itemCollectorResult{
 			Title:  title,
 			Magnet: magnet,

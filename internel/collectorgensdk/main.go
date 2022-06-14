@@ -23,7 +23,7 @@ func main() {
 	}
 	cotmpl, err := tmp.Parse(string(cotmplByte))
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("parse template err: ", err)
 	}
 	rulesByte, err := ioutil.ReadFile(specFile)
 	if err != nil {
